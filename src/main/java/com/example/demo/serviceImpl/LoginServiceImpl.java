@@ -3,11 +3,13 @@ package com.example.demo.serviceImpl;
 import com.example.demo.domain.mysql.USER;
 import com.example.demo.repository.UserRepository;
 import com.example.demo.service.LoginService;
+import com.example.demo.service.SessionService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.web.context.request.RequestContextHolder;
 import org.springframework.web.context.request.ServletRequestAttributes;
 
+import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpSession;
 import java.util.Optional;
 
@@ -21,15 +23,17 @@ public class LoginServiceImpl implements LoginService {
     @Autowired
     UserRepository userRepository;
 
+    @Autowired
+    SessionService sessionService;
+
     @Override
-    public boolean login(String id, String pw) {
-        ServletRequestAttributes attr = (ServletRequestAttributes) RequestContextHolder.currentRequestAttributes();
-        HttpSession httpSession = attr.getRequest().getSession();
+    public boolean login(final String id, final String pw) {
         Optional<USER> user = userRepository.findByIdAndPassword(Integer.parseInt(id), pw);
         if(!user.isPresent()) return false;
         else {
-            httpSession.setAttribute("login", user.get());
+            sessionService.setSession(user.get());
             return true;
         }
     }
+
 }

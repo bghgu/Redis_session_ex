@@ -4,9 +4,14 @@ package com.example.demo.config;
  * Created by ds on 2018-03-26.
  */
 
+import com.example.demo.domain.mysql.USER;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
+import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.handler.HandlerInterceptorAdapter;
+import org.springframework.web.util.WebUtils;
 
+import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
@@ -33,8 +38,62 @@ public class Interceptor extends HandlerInterceptorAdapter {
      */
     @Override
     public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler) throws Exception {
-
         HttpSession session = request.getSession();
+        Object obj = session.getAttribute("login");
+        if(obj == null) {
+            Cookie loginCookie = WebUtils.getCookie(request, "loginCookie");
+            if(loginCookie != null) {
+                System.out.println(1);
+                String sessionId = loginCookie.getValue();
+                USER user = null;
+                if(user != null) {
+                    session.setAttribute("login", user);
+                    return true;
+                }
+            }
+            response.sendRedirect("login");
+            return false;
+        }
         return true;
     }
+
+    /**
+     * 컨트롤러 메소드 실행 직후에 실행
+     * View 페이지가 렌더링 되기전에 ModelAndView 객체를 조작 가능
+     * @param request
+     * @param response
+     * @param handler
+     * @param modelAndView
+     * @throws Exception
+     */
+    @Override
+    public void postHandle(HttpServletRequest request, HttpServletResponse response, Object handler, ModelAndView modelAndView) throws Exception {
+
+    }
+
+    /**
+     * View 페이지가 렌더링 되고 난 후 에 실행
+     * @param request
+     * @param response
+     * @param handler
+     * @param ex
+     * @throws Exception
+     */
+    @Override
+    public void afterCompletion(HttpServletRequest request, HttpServletResponse response, Object handler, Exception ex) throws Exception {
+    }
+
+    /**
+     * Servlet 3.0 부터 비동기 요청이 가능
+     * 비동기 요청시 postHandle와 afterCompletion 은 실행되지 않고, 이 메소드가 실행
+     * @param request
+     * @param response
+     * @param handler
+     * @throws Exception
+     */
+    @Override
+    public void afterConcurrentHandlingStarted(HttpServletRequest request, HttpServletResponse response, Object handler) throws Exception {
+
+    }
+
 }
