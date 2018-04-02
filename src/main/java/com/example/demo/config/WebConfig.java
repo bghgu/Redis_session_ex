@@ -14,24 +14,21 @@ import org.springframework.web.servlet.view.InternalResourceViewResolver;
  */
 
 @Configuration
-//오버라이드
-@EnableWebMvc
 public class WebConfig extends WebMvcConfigurerAdapter {
+
+    private static final String[] EXCLUDE_PATH = {
+            "/",
+            "/login",
+            "/login-processing"
+    };
 
     @Autowired
     private Interceptor interceptor;
 
-    @Bean
-    public ViewResolver configureViewResolver() {
-        InternalResourceViewResolver viewResolve = new InternalResourceViewResolver();
-        viewResolve.setPrefix("/WEB-INF/jsp/");
-        viewResolve.setSuffix(".jsp");
-        return viewResolve;
-    }
-
     @Override
     public void addInterceptors(InterceptorRegistry registry) {
         registry.addInterceptor(interceptor)
-                .addPathPatterns("/**");
+                .addPathPatterns("/**")
+                .excludePathPatterns(EXCLUDE_PATH);
     }
 }

@@ -17,7 +17,7 @@ public class SessionServiceImpl implements SessionService {
 
     @Override
     public void setSession(USER user) {
-        HttpSession httpSession = ContextUtils.getSession(false);
+        HttpSession httpSession = ContextUtils.getSession(true);
         httpSession.setAttribute("login", user);
     }
 

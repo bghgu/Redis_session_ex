@@ -38,22 +38,31 @@ public class Interceptor extends HandlerInterceptorAdapter {
      */
     @Override
     public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler) throws Exception {
-        HttpSession session = request.getSession();
-        Object obj = session.getAttribute("login");
-        if(obj == null) {
-            Cookie loginCookie = WebUtils.getCookie(request, "loginCookie");
+        HttpSession session = request.getSession(false);
+        if(session == null) {
+            response.sendRedirect("login");
+            return false;
+        }
+
+        USER user = (USER) session.getAttribute("login");
+
+        if(user == null) {
+            response.sendRedirect("login");
+            return false;
+        }else {
+            session.setAttribute("login", user);
+        }
+
+        /*Cookie loginCookie = WebUtils.getCookie(request, "loginCookie");
             if(loginCookie != null) {
-                System.out.println(1);
                 String sessionId = loginCookie.getValue();
+                System.out.println(sessionId);
                 USER user = null;
                 if(user != null) {
                     session.setAttribute("login", user);
                     return true;
                 }
-            }
-            response.sendRedirect("login");
-            return false;
-        }
+            }*/
         return true;
     }
 
