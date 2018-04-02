@@ -22,6 +22,15 @@ public class SessionServiceImpl implements SessionService {
     }
 
     @Override
+    public void deleteSession() {
+        HttpSession httpSession = ContextUtils.getSession(true);
+        //로그인 객체 세션에서 삭제
+        httpSession.removeAttribute("login");
+        //세션 무효화, 세션을 삭제하는 것이 아님!!!
+        httpSession.invalidate();
+    }
+
+    @Override
     public Cookie createCookie() {
         HttpSession httpSession = ContextUtils.getSession(false);
         return new Cookie("loginCookie", httpSession.getId());

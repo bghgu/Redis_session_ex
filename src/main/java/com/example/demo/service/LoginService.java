@@ -7,4 +7,5 @@ import com.example.demo.domain.mysql.USER;
  */
 public interface LoginService {
     boolean login(final String id, final String pw);
+    void logout();
 }

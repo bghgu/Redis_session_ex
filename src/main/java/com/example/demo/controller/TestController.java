@@ -56,6 +56,7 @@ public class TestController {
 
     @GetMapping("logout")
     public String logout() {
+        loginService.logout();
         return "redirect:login";
     }
 }

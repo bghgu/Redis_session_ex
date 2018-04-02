@@ -36,4 +36,9 @@ public class LoginServiceImpl implements LoginService {
         }
     }
 
+    @Override
+    public void logout() {
+        sessionService.deleteSession();
+    }
+
 }

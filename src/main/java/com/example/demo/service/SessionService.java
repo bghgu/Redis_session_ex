@@ -9,5 +9,6 @@ import javax.servlet.http.Cookie;
  */
 public interface SessionService {
     void setSession(final USER user);
+    void deleteSession();
     Cookie createCookie();
 }
