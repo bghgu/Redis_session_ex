@@ -4,8 +4,10 @@ package com.example.demo.config;
  * Created by ds on 2018-03-26.
  */
 
-import com.example.demo.domain.mysql.USER;
+import com.example.demo.domain.USER;
+import com.example.demo.service.LoginService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.session.SessionRepository;
 import org.springframework.stereotype.Component;
 import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.handler.HandlerInterceptorAdapter;
@@ -26,6 +28,9 @@ import javax.servlet.http.HttpSession;
 @Component
 public class Interceptor extends HandlerInterceptorAdapter {
 
+    @Autowired
+    LoginService loginService;
+
     /**
      * 컨트롤러 메소드 실행 직전에 수행
      * true 를 반환하면 계속 진행이 되고  false 를 리턴하면 실행 체인(다른 인터셉터, 컨트롤러 실행)이 중지되고 반환
@@ -38,31 +43,21 @@ public class Interceptor extends HandlerInterceptorAdapter {
      */
     @Override
     public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler) throws Exception {
-        HttpSession session = request.getSession(false);
-        if(session == null) {
-            response.sendRedirect("login");
-            return false;
-        }
-
+        HttpSession session = request.getSession();
         USER user = (USER) session.getAttribute("login");
-
         if(user == null) {
-            response.sendRedirect("login");
-            return false;
-        }else {
-            session.setAttribute("login", user);
-        }
-
-        /*Cookie loginCookie = WebUtils.getCookie(request, "loginCookie");
-            if(loginCookie != null) {
-                String sessionId = loginCookie.getValue();
-                System.out.println(sessionId);
-                USER user = null;
-                if(user != null) {
-                    session.setAttribute("login", user);
+            Cookie cookie = WebUtils.getCookie(request, "loginCookie");
+            if(cookie != null) {
+                String sessionId = cookie.getValue();
+                USER obj = loginService.findBySessionId(sessionId);
+                if(obj != null) {
+                    session.setAttribute("login", obj);
                     return true;
                 }
-            }*/
+            }
+            response.sendRedirect("login");
+            return false;
+        }
         return true;
     }
 

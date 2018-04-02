@@ -1,6 +1,6 @@
 package com.example.demo.service;
 
-import com.example.demo.domain.mysql.USER;
+import com.example.demo.domain.USER;
 
 import javax.servlet.http.Cookie;
 
@@ -11,4 +11,5 @@ public interface SessionService {
     void setSession(final USER user);
     void deleteSession();
     Cookie createCookie();
+    String getSessionId();
 }

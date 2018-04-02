@@ -1,6 +1,6 @@
 package com.example.demo.controller;
 
-import com.example.demo.domain.mysql.USER;
+import com.example.demo.domain.USER;
 import com.example.demo.service.LoginService;
 import com.example.demo.service.SessionService;
 import com.example.demo.utils.ContextUtils;
@@ -10,10 +10,8 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RestController;
 
 import javax.servlet.http.HttpServletResponse;
-import javax.servlet.http.HttpSession;
 
 /**
  * Created by ds on 2018-03-26.

@@ -1,6 +1,6 @@
 package com.example.demo.serviceImpl;
 
-import com.example.demo.domain.mysql.USER;
+import com.example.demo.domain.USER;
 import com.example.demo.service.SessionService;
 import com.example.demo.utils.ContextUtils;
 import org.springframework.stereotype.Service;
@@ -33,6 +33,17 @@ public class SessionServiceImpl implements SessionService {
     @Override
     public Cookie createCookie() {
         HttpSession httpSession = ContextUtils.getSession(false);
-        return new Cookie("loginCookie", httpSession.getId());
+        Cookie cookie = new Cookie("loginCookie", httpSession.getId());
+        //쿠키 찾을 경로
+        cookie.setPath("/");
+        //쿠키 유효 기간
+        cookie.setMaxAge(60 * 60 * 24 * 7);
+        return cookie;
+    }
+
+    @Override
+    public String getSessionId() {
+        HttpSession httpSession = ContextUtils.getSession(false);
+        return httpSession.getId();
     }
 }
