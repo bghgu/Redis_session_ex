@@ -1,10 +1,10 @@
 package com.example.demo.repository;
 
-import com.example.demo.domain.USER;
+import com.example.demo.domain.mysql.USER;
 import org.springframework.data.repository.CrudRepository;
 
+import java.util.List;
 import java.util.Optional;
-
 
 /**
  * Created by ds on 2018-03-26.

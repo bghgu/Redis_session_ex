@@ -1,10 +1,12 @@
 package com.example.demo.controller;
 
-import com.example.demo.domain.USER;
+import com.example.demo.domain.mysql.USER;
 import com.example.demo.service.LoginService;
 import com.example.demo.service.SessionService;
 import com.example.demo.utils.ContextUtils;
 import org.apache.catalina.servlet4preview.http.HttpServletRequest;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -12,6 +14,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 /**
  * Created by ds on 2018-03-26.
@@ -26,13 +29,7 @@ public class TestController {
     @Autowired
     SessionService sessionService;
 
-    /*@GetMapping("")
-    public String test(HttpSession httpSession) {
-        httpSession.setAttribute("test", "HelloWorld");
-        return httpSession.getId();
-    }*/
-
-    @GetMapping(value = {"", "login"})
+    @GetMapping("login")
     public String login() {
         return "login";
     }

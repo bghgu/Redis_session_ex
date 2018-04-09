@@ -4,10 +4,9 @@ package com.example.demo.config;
  * Created by ds on 2018-03-26.
  */
 
-import com.example.demo.domain.USER;
+import com.example.demo.domain.mysql.USER;
 import com.example.demo.service.LoginService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.session.SessionRepository;
 import org.springframework.stereotype.Component;
 import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.handler.HandlerInterceptorAdapter;

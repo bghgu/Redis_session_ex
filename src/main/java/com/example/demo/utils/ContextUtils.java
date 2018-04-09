@@ -13,7 +13,6 @@ import javax.servlet.http.HttpSession;
  * Created by ds on 2018-03-26.
  */
 
-
 public class ContextUtils {
 
     /**
@@ -84,7 +83,7 @@ public class ContextUtils {
     }
 
     /**
-     * Session 영역에 객체 저장
+     * RedisCookie 영역에 객체 저장
      * @param key
      * @param obj
      */

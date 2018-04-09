@@ -1,6 +1,6 @@
 package com.example.demo.service;
 
-import com.example.demo.domain.USER;
+import com.example.demo.domain.mysql.USER;
 
 import javax.servlet.http.Cookie;
 

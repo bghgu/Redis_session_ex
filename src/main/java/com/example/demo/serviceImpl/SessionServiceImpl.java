@@ -1,6 +1,6 @@
 package com.example.demo.serviceImpl;
 
-import com.example.demo.domain.USER;
+import com.example.demo.domain.mysql.USER;
 import com.example.demo.service.SessionService;
 import com.example.demo.utils.ContextUtils;
 import org.springframework.stereotype.Service;
